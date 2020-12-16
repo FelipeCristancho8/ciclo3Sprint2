@@ -1,5 +1,9 @@
 from fastapi import FastAPI, File, UploadFile, APIRouter, HTTPException
 
+from db.file_db import get_file, size_file_db
+from db.file_db import FileInDB
+from model.file_model import FileIn
+
 router = APIRouter()
 
 
@@ -15,7 +19,7 @@ async def create_upload_file(file: UploadFile = File(...)):
             "size" : len(sizeFile)}
 
 @router.get("/file/{file_db}")
-async def get_balance(file_db: str):
+async def get_one_file(file_db: str):
 
     file_in_db = get_file(file_db)
 

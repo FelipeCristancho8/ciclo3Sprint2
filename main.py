@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 from routes import userRoutes 
 from routes import fileRoutes
@@ -8,6 +9,13 @@ from model.file_model import FileIn
 
 
 app = FastAPI()
+
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware, allow_origins=origins,
+    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+)
 
 app.include_router(userRoutes.router)
 app.include_router(fileRoutes.router)
