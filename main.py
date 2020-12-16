@@ -17,10 +17,12 @@ async def root():
 async def create_file(file: bytes = File(...)):
     return {"file_size": len(file)}
 
-
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...)):
-    return {"filename": file.filename}
+async def create_upload_file(file: UploadFile = File(...)):    
+    sizeFile = await file.read()
+    return {"filename": file.filename,
+            "type" : file.content_type,
+            "size" : len(sizeFile)}
 
 @app.get("/file/{file_db}")
 async def get_balance(file_db: str):
