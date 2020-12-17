@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, APIRouter, HTTPException
 
-from db.file_db import get_file, size_file_db
+from db.file_db import get_file, size_file_db, get_files
 from db.file_db import FileInDB
 from model.file_model import FileIn
 
@@ -29,3 +29,8 @@ async def get_one_file(file_db: str):
     file_out = FileIn(**file_in_db.dict())
 
     return file_out
+
+@router.get("/list-files")
+async def list_files():
+    files_in_db = get_files()
+    return files_in_db
