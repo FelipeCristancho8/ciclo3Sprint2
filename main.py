@@ -23,10 +23,3 @@ app.include_router(fileRoutes.router)
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-@app.get("/size")
-async def get_files():
-
-    file_in_db = size_file_db()
-
-    return {"cantidad de registros": file_in_db}

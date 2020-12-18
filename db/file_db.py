@@ -13,10 +13,6 @@ database_files = {
                         "file_type":"compresed",
                         "size":235325}),
 
-    "file2": FileInDB(**{"file_name":"archivo2.rar",
-                         "file_type":"compresed",
-                        "size":1234}),
-
     "file2": FileInDB(**{"file_name":"archivo2.txt",
                          "file_type":"txt",
                         "size":1234}),
@@ -59,6 +55,14 @@ def get_file(file_name: str):
         return database_files[file_name]
     else:
         return None
+        
+def delete_file(file_name: str):
+    if file_name in database_files.keys():
+        file_deleted = database_files[file_name]
+        database_files.pop(file_name)
+        return file_deleted
+    else:
+        return None
 
 def size_file_db():
     return len(database_files)
@@ -69,3 +73,6 @@ def get_files():
         archivo = database_files[t]
         files.append(archivo)
     return files
+
+def get_names_files():
+    return database_files
