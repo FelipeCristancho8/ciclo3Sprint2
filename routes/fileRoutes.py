@@ -31,15 +31,20 @@ async def create_file(file: bytes = File(...)):
 @router.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
     sizeFile = await file.read()
-    newFile = "File"+ str(random.randint(11,10000))
-    database_files.__setitem__(newFile,FileInDB(**{"file_name":file.filename,
+    newFile = "file"+ str(random.randint(11,10000))
+    check_extension(file.filename)
+    database_files.__setitem__(newFile,FileInDB(**{"id":newFile,
+                                                    "file_name":file.filename,
                                                     "file_type":file.content_type,
+                                                    "file_img" : check_extension(file.filename),
                                                     "size":len(sizeFile)}))
       
     return {"Message": "File upload succesfully",
             "details": {
+                "id" : newFile,
                 "filename": file.filename,
                 "file_type" : file.content_type,
+                "file_img" : check_extension(file.filename),
                 "size" : len(sizeFile)}
             }
 
@@ -75,4 +80,18 @@ async def list_files():
 async def list_name_files():
     files = get_names_files()
     return files
+
+def check_extension(filename):
+    if(".txt" in filename):
+        return "https://i.ibb.co/YRtpwzJ/txt.png"
+    elif(".rar" in filename):
+        return "https://i.ibb.co/0mkMt3B/rar.png"
+    elif(".png" in filename or ".jpg" in filename or ".JPG" in filename):
+        return "https://i.ibb.co/B3HZ36D/imagen.png"
+    elif(".doc" in filename or ".jpg" in filename):
+        return "https://i.ibb.co/7YJ4ZTr/docs.png"
+    elif(".xls" in filename or ".jpg" in filename):
+        return "https://i.ibb.co/fkkvVyW/xls.png"
+    else:
+        return "https://i.ibb.co/kGPFswK/unknown.png"
 
